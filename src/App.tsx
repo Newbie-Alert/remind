@@ -6,6 +6,7 @@ import Detail from "./pages/Detail";
 import Toast from "./module/Toast";
 import AuthProvider from "./provider/Auth/AuthProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Layout from "./layout/Layout";
 
 const queryClient = new QueryClient();
 
@@ -17,10 +18,12 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/detail/:id" element={<Detail />} />
-            </Routes>
+            <Layout>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/detail/:id" element={<Detail />} />
+              </Routes>
+            </Layout>
           </BrowserRouter>
         </AuthProvider>
       </QueryClientProvider>

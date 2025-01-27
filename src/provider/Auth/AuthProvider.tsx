@@ -2,6 +2,7 @@ import { AuthChangeEvent, Session, User } from "@supabase/supabase-js";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../../supabase/supabase";
 import { ToastPopUp } from "../../module/Toast";
+import AuthPage from "../../components/authPage";
 
 interface AuthProviderType {
   user: User | null;
@@ -20,21 +21,54 @@ export default function AuthProvider({ children }: Props) {
   const [user, setUser] = useState<User | null>(null);
 
   const signUp = async (email: string, password: string) => {
-    let { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
+    try {
+      let { data } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+      ToastPopUp({
+        type: "success",
+        message: "회원가입 성공",
+      });
+    } catch (error) {
+      ToastPopUp({
+        type: "error",
+        message: "회원가입 실패",
+      });
+    }
   };
 
   const login = async (email: string, password: string) => {
-    let { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      let { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      ToastPopUp({
+        type: "success",
+        message: "로그인 성공",
+      });
+    } catch (error) {
+      ToastPopUp({
+        type: "error",
+        message: "로그인 실패",
+      });
+    }
   };
 
   const logout = async () => {
-    let { error } = await supabase.auth.signOut();
+    try {
+      let { error } = await supabase.auth.signOut();
+      ToastPopUp({
+        type: "success",
+        message: "로그아웃 되었어요",
+      });
+    } catch (error) {
+      ToastPopUp({
+        type: "error",
+        message: "로그아웃 실패",
+      });
+    }
   };
 
   // 세션 상태 변경 시
@@ -55,14 +89,9 @@ export default function AuthProvider({ children }: Props) {
     };
   }, []);
 
-  if (!user)
-    <React.Fragment>
-      <div>회원가입 페이지</div>
-    </React.Fragment>;
-
   return (
     <AuthContext.Provider value={{ user, signUp, login, logout }}>
-      {children}
+      {user ? children : <AuthPage />}
     </AuthContext.Provider>
   );
 }
