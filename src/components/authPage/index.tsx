@@ -26,6 +26,11 @@ export default function AuthPage() {
     auth?.signUp(email, password);
   };
 
+  const handleSignIn = () => {
+    const { email, password } = userInfo;
+    auth?.login(email, password);
+  };
+
   return (
     <Style.Wrapper>
       <Style.FormContainer>
@@ -74,7 +79,7 @@ export default function AuthPage() {
             <Style.Button $bgColor="black" onClick={handleSignup}>
               회원가입
             </Style.Button>
-            <Style.Button>로그인</Style.Button>
+            <Style.Button onClick={handleSignIn}>로그인</Style.Button>
           </Style.FormColBox>
         </Style.Form>
       </Style.FormContainer>
