@@ -28,7 +28,7 @@ export default function AuthProvider({ children }: Props) {
       });
       ToastPopUp({
         type: "success",
-        message: "회원가입 성공",
+        message: "이메일을 확인해주세요",
       });
     } catch (error) {
       ToastPopUp({

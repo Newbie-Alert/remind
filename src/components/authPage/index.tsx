@@ -30,7 +30,10 @@ export default function AuthPage() {
     <Style.Wrapper>
       <Style.FormContainer>
         <Style.FormTitle>회원가입</Style.FormTitle>
-        <Style.Form>
+        <Style.Form
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}>
           <Style.FormColBox>
             <label htmlFor="name">이름</label>
             <input
