@@ -30,7 +30,7 @@ export default function Home() {
   //serviceWorker push 트리거
   const pushNotiTrigger = (missedTaskCount: number) => {
     if (
-      typeof window !== undefined &&
+      typeof window !== "undefined" &&
       "serviceWorker" in navigator &&
       "PushManager" in window
     ) {
@@ -45,7 +45,7 @@ export default function Home() {
   // 10분마다 조회하여 확인
   setInterval(() => {
     checkTodoStatus();
-  }, 600000);
+  }, 60000);
 
   // push 알림 권한
   function requestPushNotificationPermission() {
